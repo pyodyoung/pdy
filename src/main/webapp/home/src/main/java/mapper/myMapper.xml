@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC 
+"-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="mapper.myMapper">
+<!-- <select id="getItemNamePrice" parameterType="String"
+	resultType="model.CartItem">
+select item_name as name, price from selling_item 
+where item_id = #{id}
+</select>
+ -->
+<select id="getItemId" parameterType="String"
+				resultType="Integer">
+select count(*) from selling_item 
+where item_id = #{id}
+</select>
+<insert id="putItem" parameterType="model.Item">
+insert into selling_item values(#{item_id},
+#{item_name},#{price},#{info},#{origin})
+ </insert>
+<select id="getItemsCount" resultType="Integer">
+select count(*) from selling_item
+</select>
+
+<select id="getItemDetail" parameterType="String" resultType="model.Item">
+select * from selling_item where item_id = #{no}
+</select>
+
+ <select id="getAllItemsCondition" resultType="model.Item" 	parameterType="Integer"> 
+ select item_id,item_name,price,origin from 
+(select rownum rn,item_id,item_name,price,origin from selling_item) 
+ where rn > (#{pagenum}-1)*5 and rn <![CDATA[<]]> (((#{pagenum}-1)*5)+6) 
+ </select> 
+ <!-- <select id="getAllItems" resultType="model.Item">
+select * from selling_item
+</select> -->
+<!-- <select id="getMatjip" parameterType="model.Matjip"
+	resultType="model.Matjip">
+select * from matjip_infor 
+where area=#{area} and janre=#{janre}
+</select> -->
+<select id="getMaxMatjipNo" resultType="Integer">
+select max(no) from matjip_infor
+</select>
+<!-- <insert id="putMatjip" parameterType="model.Matjip">
+insert into matjip_infor values(#{no},#{title},
+#{area},#{janre},#{phone},#{addr})
+</insert>
+	<select id="getMatjipDetail" 
+		parameterType="Integer"
+		resultType="model.Matjip">
+	select * from matjip_infor where no=#{no}
+	</select>
+	<select id="getMatjipInfoCondition" resultType="model.Matjip"
+		parameterType="Integer">
+	select no,title,janre from
+	(select rownum rn,no,title,janre from matjip_infor)
+	where rn > (#{pagenum}-1)*5 
+			and rn <![CDATA[<]]> ((#{pagenum}-1)*5+6) 
+	</select>
+	<select id="getMatjipInfo" resultType="model.Matjip">
+	select * from matjip_infor order by no
+	</select>
+ -->	<select id="getSeqno" resultType="Integer">
+	select max(seqno) from my_bbs
+	</select>
+	<select id="getBBSCount" resultType="Integer">
+	select count(*) from my_bbs
+	</select>
+	<select id="getBBSwithId" parameterType="Integer"
+		resultType="model.Bbs">
+	select * from my_bbs where seqno = #{id}
+	</select>
+	<select id="getBBSCodition" resultType="model.Bbs"
+		parameterType="Integer">
+	select seqno,title,id,register_date from
+			(select rownum rn, seqno, title, id, register_date
+				from	(select seqno,title,id,register_date
+						from my_bbs order by seqno desc))
+	where (rn > ((#{no}-1)*5)) and 
+			(rn <![CDATA[<]]> (((#{no}-1)*5)+6)) 
+	</select>
+	<select id="getBBS" resultType="model.Bbs">
+	select * from my_bbs order by seqno desc
+	</select>
+	<insert id="insertBBS" parameterType="model.Bbs">
+	insert into my_bbs values(#{seqno},#{title},
+	#{content},#{id},#{register_date})
+	</insert>
+<!-- 	<insert id="insertMember" 
+			parameterType="model.Member">
+	insert into custom_info values(#{id},#{pwd},
+	#{name},#{gender},#{email},#{job},#{address})
+	</insert>
+	<select id="selectMember" 
+			parameterType="String"
+			resultType="model.Member">
+	select * from custom_info 
+	where id=#{id}
+	</select>
+ --></mapper>
+
+
+
+
+
+
+
+

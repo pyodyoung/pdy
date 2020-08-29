@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC 
+"-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="mapper.cartMapper">
+<!-- <select id="getSPNameTeam" parameterType="Integer"
+	resultType="model.SoccerPlayer">
+select p.id, p.name, t.team_name
+from soccer_player p, soccer_team t
+where p.team_id = t.team_id and p.id = #{id}
+</select>
+<select id="getBBNameTeam" parameterType="Integer"
+	resultType="model.BaseballPlayer">
+select p.player_name, t.team_name
+from baseball_player p, baseball_team t
+where p.team_id = t.team_id and p.player_id = #{id}
+</select>
+
+<select id="getMatjipNamePhone" parameterType="Integer"
+	resultType="model.Matjip">
+select title, phone from matjip_infor where no = #{no}
+</select>
+
+<select id="getSeqnoSP" resultType="Integer">
+	select max(seqno) from jjim_splayer
+</select>
+<insert id="putSPlayer" parameterType="model.SPItem">
+	insert into jjim_splayer values(#{seqno},#{no},#{id})
+</insert>
+<delete id="deleteSPlayer" parameterType="model.SPItem">
+	delete from jjim_splayer where id=#{id} and no=#{no}
+</delete>
+<select id="getSPlayer" parameterType="String"
+		resultType="model.SPItem">
+	select * from jjim_splayer where id=#{id}		
+</select>
+
+<select id="getSeqnoBBP" resultType="Integer">
+	select max(seqno) from jjim_bbplayer
+</select>
+<insert id="putBBP" parameterType="model.BBPItem">
+	insert into jjim_bbplayer values(#{seqno},#{player_id},#{id})
+</insert>
+<delete id="deleteBBP" parameterType="model.BBPItem">
+	delete from jjim_bbplayer 
+	where id=#{id} and player_id = #{player_id}
+</delete>
+<select id="getBBP" resultType="model.BBPItem" parameterType="String">
+	select * from jjim_bbplayer where id=#{id}
+</select>
+
+<select id="getSeqnoMatjip" resultType="Integer">
+	select max(seqno) from jjim_matjip
+</select>
+<select id="getMatjip" parameterType="String"
+						resultType="model.MatjipItem">
+	select * from jjim_matjip where id=#{id}
+</select>
+<delete id="deleteMatjip" parameterType="model.MatjipItem">
+	delete from jjim_matjip where id=#{id} and no=#{no}
+</delete>
+<insert id="putMatjip" parameterType="model.MatjipItem">
+	insert into jjim_matjip values(#{seqno},#{no},#{id})
+</insert> -->
+<select id="getCart" parameterType="String" 
+					resultType="model.CartItem">
+	select c.seqno, c.code, c.num, c.id, i.price, i.item_name as name 
+	from my_cart c, selling_item i 
+	where c.code = i.item_id and c.id = #{id}
+</select>
+<select id="getSeqno" resultType="Integer">
+	select max(seqno) from my_cart
+</select>
+<delete id="deleteCart" parameterType="model.CartItem">
+	delete from my_cart where id=#{id} and code=#{code}
+</delete>
+<update id="updateCart" parameterType="model.CartItem">
+	update my_cart set num = #{num} 
+	where id = #{id} and code = #{code}
+</update>
+<insert id="putCart" parameterType="model.CartItem">
+	insert into my_cart values(#{seqno},#{code},#{num},#{id})
+</insert>
+</mapper>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

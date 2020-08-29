@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC 
+"-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="mapper.uploadMapper">
+<!-- <update id="updateOrderNoReply" parameterType="model.ImageWriting">
+update image_reply set order_no = order_no + 1
+where group_id = #{group_id} and order_no >= #{order_no}
+</update>
+<select id="getTotalCnt" resultType="Integer">
+select count(*) from image_reply
+</select>
+<update id="updateImage" parameterType="model.ImageWriting">
+update image_reply set title=#{title}, writer_name=#{writer_name},
+email=#{email}, content=#{content}, image_name=#{image_name}
+where writing_id=#{writing_id}
+</update>
+<delete id="deleteImage" parameterType="Integer">
+delete from image_reply where writing_id = #{id}
+</delete>
+<select id="getImageRead" parameterType="Integer"
+	resultType="model.ImageWriting">
+select * from image_reply where writing_id = #{id}
+</select>
+<select id="getImageReplyCondition" parameterType="model.Condition"
+	resultType="model.ImageWriting">
+select writing_id,parent_id,group_id,order_no,writer_name,email,
+	password, image_name,title,register_date,content from
+	(select a.*, rownum rn from
+		(select * from image_reply 
+				order by group_id desc, order_no asc) a
+	)
+where rn between #{startRow} and #{endRow}
+</select>
+<select id="getImageReply" resultType="model.ImageWriting">
+select * from image_reply 
+order by writing_id desc
+</select>
+<select id="getMax" resultType="Integer">
+select max(writing_id) from image_reply
+</select>
+<insert id="putImageReply" parameterType="model.ImageWriting">
+insert into image_reply values(#{writing_id},#{parent_id},
+#{group_id},#{order_no},#{writer_name},#{email},#{password},
+#{image_name},#{title},#{register_date},#{content})
+</insert>
+ --></mapper>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

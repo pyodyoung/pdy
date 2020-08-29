@@ -1,0 +1,181 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC 
+"-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="mapper.sportsMapper">
+<!-- <select id="getSPCount" resultType="Integer">
+select count(*) from soccer_player
+</select>
+<select id="getSTCount" resultType="Integer">
+select count(*) from soccer_team
+</select>
+<select id="getBBPCount" resultType="Integer">
+select count(*) from baseball_player
+</select>
+<select id="getBBCount" resultType="Integer">
+select count(*) from baseball_team
+</select>
+<select id="getSPDetail2" parameterType="Integer"
+	resultType="model.SoccerPlayer">
+select p.id, t.team_name, p.name, p.pos,
+	p.reg_date, p.gender, p.addr, p.tel, p.intro 
+from soccer_player p, soccer_team t
+where p.team_id = t.team_id
+	and p.id = #{id}
+</select>
+<select id="getSPDetail" parameterType="Integer"
+	resultType="model.SoccerPlayer">
+select * from soccer_player where id = #{id}
+</select>
+<select id="getSPListCondition" resultType="model.SoccerPlayer"
+	parameterType="Integer">
+select id,team_id,name,pos,reg_date,gender from
+	(select rownum rn, id, team_id, name, pos, reg_date, gender
+	from soccer_player)
+where rn > ((#{pagenum}-1)*5) and
+		rn <![CDATA[<]]> (((#{pagenum}-1)*5)+6)
+</select>
+<select id="getSPList" 
+					resultType="model.SoccerPlayer">
+select * from soccer_player
+</select>
+<select id="getSTDetail" parameterType="Integer"
+	resultType="model.SoccerTeam">
+select team_id,team_name,hometown,
+	team_owner,est_date,intro as "desc" 
+	from soccer_team where team_id = #{id}
+</select>
+<select id="getSTListCondition" resultType="model.SoccerTeam"
+	parameterType="Integer">
+select team_id,team_name,hometown,team_owner,est_date from
+	(select rownum rn, team_id, team_name, hometown, team_owner,
+			est_date from soccer_team)
+where rn > (#{pagenum}-1)*5 and
+		rn <![CDATA[<]]> (((#{pagenum}-1)*5)+6)
+</select>
+<select id="getSTList" resultType="model.SoccerTeam">
+select * from soccer_team
+</select>
+<select id="getBBPlayerDetail2"
+	parameterType="Integer"
+	resultType="model.BaseballPlayer">
+select bp.player_name, bt.team_name,
+	bp.position, bp.reg_date, bp.gender,
+	bp.address, bp.tel, bp.intro
+from baseball_player bp, baseball_team bt
+where bp.team_id = bt.team_id and bp.player_id=#{id}
+</select>
+<select id="getBBPlayerDetail" parameterType="Integer"
+	resultType="model.BaseballPlayer">
+select * from baseball_player
+where player_id = #{id}
+</select>
+<select id="getBBPlayerCondition" resultType="model.BaseballPlayer"
+	parameterType="Integer">
+select player_id, team_id, player_name, position, reg_date,
+		gender, tel from
+	(select rownum rn, player_id, team_id, player_name,
+		position, reg_date, gender, tel from baseball_player)
+where rn > (#{pagenum}-1) * 5 and
+		rn <![CDATA[<]]> (((#{pagenum}-1) * 5) + 6)
+</select>
+<select id="getBBPlayer" 
+		resultType="model.BaseballPlayer">
+select * from baseball_player
+</select>
+<select id="getBBTeamDetail" parameterType="Integer"
+	resultType="model.BaseballTeam">
+select team_id as id, team_name as name,
+	team_area as area, team_owner as owner,
+	est_date as birth, info as "desc"
+from baseball_team
+where team_id = #{id}
+</select>
+<select id="getBBTeamCondition" resultType="model.BaseballTeam"
+		parameterType="Integer">
+select team_id id, team_name name, team_area area, 
+		team_owner owner, est_date as birth from
+	(select rownum rn, team_id, team_name,
+	team_area, team_owner,
+	est_date from baseball_team)
+where rn > (#{pagenum}-1)*5 and
+		rn <![CDATA[<]]> (((#{pagenum}-1)*5)+6)
+</select>
+<select id="getBBTeam" resultType="model.BaseballTeam">
+select team_id as id, team_name as name,
+	team_area as area, team_owner as owner,
+	est_date as birth from baseball_team
+</select>
+<select id="getSoccerIdName" 
+	resultType="model.SoccerTeam">
+select team_id,team_name from soccer_team
+</select>
+<select id="getSoccerIdCnt" parameterType="Integer"
+	resultType="Integer">
+select count(*) from soccer_player where id = #{id}
+</select>
+<insert id="putSoccerPlayer"
+	parameterType="model.SoccerPlayer">
+insert into soccer_player values(#{id},#{team_id},
+#{name},#{pos},#{reg_date},#{ext_date},#{gender},
+#{addr},#{tel},#{intro})
+</insert>
+<select id="getSoccerName" resultType="String">
+select name from soccer_hometown
+</select>
+<insert id="putSoccerTeam" 
+		parameterType="model.SoccerTeam">
+insert into soccer_team values(#{team_id},
+#{team_name},null,#{hometown},#{team_owner},
+#{est_date},#{intro})
+</insert>
+<select id="getSoccerTeamId" resultType="Integer">
+select max(team_id) from soccer_team
+</select>
+
+<select id="getBaseballIdName"
+	resultType="model.BaseballTeam">
+select team_id as id, team_name as name 
+from baseball_team
+</select>
+<select id="getBaseballPlayerId"
+		parameterType="Integer" resultType="Integer">
+select count(*) from baseball_player
+	where player_id = #{id}
+</select>
+<insert id="putBaseballPlayer" 
+		parameterType="model.BaseballPlayer">
+insert into baseball_player values(#{player_id},
+#{team_id},#{player_name},#{position},#{reg_date},
+#{ext_date},#{gender},#{intro},#{address},#{tel})
+</insert>
+
+<select id="getHometown" resultType="String">
+select name from baseball_hometown
+</select>
+<select id="getMaxTeamid" resultType="Integer">
+select max(team_id) from baseball_team
+</select>
+<insert id="putBaseball" 
+		parameterType="model.BaseballTeam">
+insert into baseball_team values(#{id},#{name},
+#{area},#{owner},#{desc},#{birth})
+</insert> -->
+</mapper>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
